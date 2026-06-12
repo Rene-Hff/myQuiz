@@ -1,0 +1,27 @@
+body{
+    background-color: #014083 !important;
+}
+
+.container{
+    background-color: #014083 !important;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.quiz-card{
+    width: 30rem;
+}
+
+.car-img-top{
+    object-fit:cover;
+}
+
+.question-footer{
+    display:flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid rgba(0, 0, 0, 0.4);
+    padding-top: 12px;
+}
