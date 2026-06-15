@@ -57,16 +57,69 @@ let questions = [
 },
 ];
 
+let rightQuestions = 0;
+
 let currentQuestion = 0;
 
 function init(){
     document.getElementById('all-questions').innerHTML = questions.length;
     showQuestion();
-
 }
 
 function showQuestion(){
-    let question = questions[currentQuestion];
-        document.getElementById('questiontext').innerHTML = question['question'];
-        
+    if(currentQuestion >= questions.length){
+        document.getElementById('endscreen').style = '';
+        document.getElementById('question-body').style = 'display: none';
+        document.getElementById('right-answers').innerHTML = rightQuestions;
+        document.getElementById('questions-all').innerHTML = questions.length;
+        document.getElementById('header-img').src = 'img/trophy.png';
+    } else{
+        let percent = (currentQuestion + 1) / questions.length;
+            percent = Math.round(percent*100);
+
+        document.getElementById('progress-bar').innerHTML = `${percent} %`;
+        document.getElementById('progress-bar').style = `width: ${percent}%`;
+
+        let question = questions[currentQuestion];
+
+        document.getElementById('question-number').innerHTML = currentQuestion +1; // get the current question varible 
+        document.getElementById('questiontext').innerHTML = question['question'];  // Questions div
+        document.getElementById('answer_1').innerHTML = question['answer_1'];      // Answer div
+        document.getElementById('answer_2').innerHTML = question['answer_2'];      // Answer div
+        document.getElementById('answer_3').innerHTML = question['answer_3'];      // Answer div
+        document.getElementById('answer_4').innerHTML = question['answer_4'];      // Answer div
+     }   
+}
+
+function answer(selection){
+    let question = questions[currentQuestion];                      // variable question get the first index and their first index of the object in that array
+    let selectedQuestionNumber = selection.slice(-1);               // get the last character off the element with the .slice() method
+    let idOfRightAnswer = `answer_${question['right_answer']}`;     // idOfRightAnswer get the id of the right answer
+
+        if(selectedQuestionNumber == question['right_answer']){
+            document.getElementById(selection).parentNode.classList.add('bg-success');
+            rightQuestions++;
+        } else{
+            document.getElementById(selection).parentNode.classList.add('bg-danger');
+            document.getElementById(idOfRightAnswer).parentNode.classList.add('bg-success');
+        }
+            document.getElementById('next-button').disabled = false;
+}
+
+function nextQuestion(){
+    currentQuestion++;      // count the questions 
+    document.getElementById('next-button').disabled = true;
+    resetAnswerButtons();
+    showQuestion();
+}
+
+function resetAnswerButtons(){
+        document.getElementById('answer_1').parentNode.classList.remove('bg-danger');
+        document.getElementById('answer_1').parentNode.classList.remove('bg-success');
+        document.getElementById('answer_2').parentNode.classList.remove('bg-danger');
+        document.getElementById('answer_2').parentNode.classList.remove('bg-success');
+        document.getElementById('answer_3').parentNode.classList.remove('bg-danger');
+        document.getElementById('answer_3').parentNode.classList.remove('bg-success');
+        document.getElementById('answer_4').parentNode.classList.remove('bg-danger');
+        document.getElementById('answer_4').parentNode.classList.remove('bg-success');
 }

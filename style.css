@@ -1,9 +1,9 @@
 body{
-    background-color: #014083 !important;
+    background-color: #000e79 !important;
 }
 
 .container{
-    background-color: #014083 !important;
+    background-color: #000E79 !important;
     min-height: 100vh;
     display: flex;
     justify-content: center;
@@ -14,14 +14,36 @@ body{
     width: 30rem;
 }
 
-.car-img-top{
-    object-fit:cover;
-}
-
 .question-footer{
     display:flex;
     justify-content: space-between;
     align-items: center;
     border-top: 1px solid rgba(0, 0, 0, 0.4);
     padding-top: 12px;
+}
+
+.quiz-answer-card:hover{
+    cursor: pointer;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+
+.bg-success, .bg-danger{
+    color: white !important;
+}
+
+.text-center{
+    text-align:center;
+}
+.final-text{
+font-size: 38px;
+margin-bottom: 24px;
+}
+
+#header-img{
+object-fit: cover;
+margin: auto;
+}
+
+#progress-bar{
+background-color: rgb(4, 224, 231);
 }
