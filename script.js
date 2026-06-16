@@ -1,9 +1,9 @@
 let questions = [
 {
-    "question": "Wer hat HTML erfunden?",
+    "question": "Wer hat die Marke Apple erfunden?",
     "answer_1": "Robbie Williams",
     "answer_2": "Lady Gaga",
-    "answer_3": "Tim Berners-Lee",
+    "answer_3": "Steve Jobs",
     "answer_4": "Justin Bieber",
     "right_answer": 3
 },
@@ -58,7 +58,6 @@ let questions = [
 ];
 
 let rightQuestions = 0;
-
 let currentQuestion = 0;
 
 function init(){
@@ -67,36 +66,50 @@ function init(){
 }
 
 function showQuestion(){
-    if(currentQuestion >= questions.length){
+    if(gameIsOver()){
+        showEndScreen();
+    } else{
+        updateProgressBar();
+        updatToNextQuestion();
+    }   
+}
+
+function gameIsOver(){
+    return currentQuestion >= questions.length;
+}
+
+function showEndScreen(){
         document.getElementById('endscreen').style = '';
         document.getElementById('question-body').style = 'display: none';
         document.getElementById('right-answers').innerHTML = rightQuestions;
         document.getElementById('questions-all').innerHTML = questions.length;
         document.getElementById('header-img').src = 'img/trophy.png';
-    } else{
-        let percent = (currentQuestion + 1) / questions.length;
-            percent = Math.round(percent*100);
+}
 
-        document.getElementById('progress-bar').innerHTML = `${percent} %`;
-        document.getElementById('progress-bar').style = `width: ${percent}%`;
-
+function updatToNextQuestion(){
         let question = questions[currentQuestion];
-
         document.getElementById('question-number').innerHTML = currentQuestion +1; // get the current question varible 
         document.getElementById('questiontext').innerHTML = question['question'];  // Questions div
         document.getElementById('answer_1').innerHTML = question['answer_1'];      // Answer div
         document.getElementById('answer_2').innerHTML = question['answer_2'];      // Answer div
         document.getElementById('answer_3').innerHTML = question['answer_3'];      // Answer div
         document.getElementById('answer_4').innerHTML = question['answer_4'];      // Answer div
-     }   
 }
+
+function updateProgressBar(){
+    let percent = (currentQuestion + 1) / questions.length;
+            percent = Math.round(percent*100);
+        document.getElementById('progress-bar').innerHTML = `${percent} %`;
+        document.getElementById('progress-bar').style = `width: ${percent}%`;
+}
+
 
 function answer(selection){
     let question = questions[currentQuestion];                      // variable question get the first index and their first index of the object in that array
     let selectedQuestionNumber = selection.slice(-1);               // get the last character off the element with the .slice() method
     let idOfRightAnswer = `answer_${question['right_answer']}`;     // idOfRightAnswer get the id of the right answer
 
-        if(selectedQuestionNumber == question['right_answer']){
+        if(rightAnswerSelected(selectedQuestionNumber, question)){
             document.getElementById(selection).parentNode.classList.add('bg-success');
             rightQuestions++;
         } else{
@@ -104,6 +117,10 @@ function answer(selection){
             document.getElementById(idOfRightAnswer).parentNode.classList.add('bg-success');
         }
             document.getElementById('next-button').disabled = false;
+}
+
+function rightAnswerSelected(selectedQuestionNumber, question){
+    return  selectedQuestionNumber == question['right_answer'];
 }
 
 function nextQuestion(){
@@ -122,4 +139,13 @@ function resetAnswerButtons(){
         document.getElementById('answer_3').parentNode.classList.remove('bg-success');
         document.getElementById('answer_4').parentNode.classList.remove('bg-danger');
         document.getElementById('answer_4').parentNode.classList.remove('bg-success');
+}
+
+ function restartGame(){
+    document.getElementById('header-img').src = 'img/quiz_image.jpg';
+    document.getElementById('question-body').style = '';           // questionbody anzeigen
+    document.getElementById('endscreen').style = 'display: none'; // Endscreen ausblende
+    rightQuestions = 0;
+    currentQuestion = 0;
+    init();
 }
